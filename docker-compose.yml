@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+    db:
+        image: mysql
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: polytech
+            MYSQL_USER: polytech
+            MYSQL_PASSWORD: polytech
+            MYSQL_DATABASE: agendaDb
+        volumes:
+            - ./db_data:/var/lib/mysql
+
+    adminer:
+        image: adminer
+        restart: always
+        ports:
+            - 8080:8080
