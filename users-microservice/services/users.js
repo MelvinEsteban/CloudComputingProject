@@ -26,7 +26,7 @@ async function get(login) {
     );
 
     let message = 'Error No users named ' + login;
-    let data = []
+    let data = [];
     if (result.length > 0) {
         data = result;
         message = 'GET SUCCESS';
@@ -52,7 +52,7 @@ async function remove(id) {
 
 
 async function update(id, login = null, passwordHash = null) {
-    const result = await db.query(
+    const result = await query(
         `UPDATE users 
             SET login=?, password_hash=?
             WHERE id_user=?`,

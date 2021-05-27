@@ -2,8 +2,9 @@ version: '3'
 
 services:
     db:
-        image: mysql
+        image: mysql:latest
         restart: always
+        
         environment:
             MYSQL_ROOT_PASSWORD: ${DB_PASS}
             MYSQL_USER: ${DB_USER}
@@ -23,7 +24,10 @@ services:
             - 8080:8080
     
     users:
-        build: ./users-microservice
+        image: users:${TAG:-latest}
+        build:
+            context: ./users-microservice/
+            dockerfile: Dockerfile
         restart: always
         depends_on: 
             - db
@@ -37,4 +41,24 @@ services:
 
         ports: 
             - "3001:3001"
+    
+    agenda:
+        image: agenda:${TAG:-latest}
+        build:
+            context: ./agenda-microservice/
+            dockerfile: Dockerfile
+        restart: always
+        depends_on: 
+            - db
+        environment: 
+            PORT: 3002
+            DB_HOST: 'db'
+            DB_USER : ${DB_USER}
+            DB_PASS: ${DB_PASS}
+            DB_DATABASE: ${DB_DATABASE}
+            DB_PORT: ${DB_PORT}
+
+        ports: 
+            - "3002:3002"
+    
         

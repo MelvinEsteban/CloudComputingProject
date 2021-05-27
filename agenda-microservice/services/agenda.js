@@ -1,78 +1,113 @@
 const query = require('./db');
 
-async function add(login, hash) {
+async function add(name, idUser) {
     const result = await query(
-        `INSERT INTO users (login, password_hash)
+        `INSERT INTO agenda (name, id_user)
         VALUES  (?,?)`,
         [
-            login, hash
+            name, idUser
         ]
     );
 
-    let message = 'Error in creating users';
+    let message = 'Error in creating agenda';
 
     if (result.affectedRows) {
-        message = 'Users created successfully';
+        message = 'Agenda created successfully';
     }
-    return { message };
+    return {
+        message
+    };
 }
 
-async function get(login) {
+async function getByName(name) {
     const result = await query(
-        `SELECT * FROM users WHERE login=?`,
+        `SELECT * FROM agenda WHERE name=?`,
         [
-            login
+            name
         ]
     );
 
-    let message = 'Error No users named ' + login;
-    let data = []
+    let message = 'Error no agenda named ' + name;
+    let data = [];
     if (result.length > 0) {
         data = result;
         message = 'GET SUCCESS';
     }
 
-    return { message, data };
+    return {
+        message,
+        data
+    };
 }
 
-async function remove(id) {
+async function getByUser(idUser) {
     const result = await query(
-        `DELETE FROM users WHERE id_user=?`,
-        [id]
-    );
-
-    let message = 'Error in deleting users';
-
-    if (result.affectedRows) {
-        message = 'Users deleted successfully';
-    }
-
-    return { message };
-}
-
-
-async function update(id, login = null, passwordHash = null) {
-    const result = await db.query(
-        `UPDATE users 
-            SET login=?, password_hash=?
-            WHERE id_user=?`,
+        `SELECT * FROM agenda WHERE id_user=?`,
         [
-            login, passwordHash, id
+            idUser
         ]
     );
 
-    let message = 'Error in updating users';
-
-    if (result.affectedRows) {
-        message = 'Users updated successfully';
+    let message = 'Error no Agenda assigned to the user : ' + idUser;
+    let data = [];
+    if (result.length > 0) {
+        data = result;
+        message = 'GET SUCCESS';
     }
 
-    return { message };
+    return {
+        message,
+        data
+    };
+
+}
+
+
+
+
+async function remove(id) {
+    const result = await query(
+        `DELETE FROM agenda WHERE id_agenda=?`,
+        [id]
+    );
+
+    let message = 'Error in deleting agenda';
+
+    if (result.affectedRows) {
+        message = 'Agenda deleted successfully';
+    }
+
+    return {
+        message
+    };
+}
+
+
+async function update(idAgenda, name, idUser) {
+    const result = await query(
+        `UPDATE agenda 
+            SET name=?, id_user=?
+            WHERE id_agenda=?`,
+        [
+            name, idUser, idAgenda
+        ]
+    );
+
+    let message = 'Error in updating agenda';
+
+    if (result.affectedRows) {
+        message = 'Agenda updated successfully';
+    }
+
+    return {
+        message
+    };
 }
 
 module.exports = {
     ...module.exports,
-    get,
+    getByUser,
+    getByName,
     add,
     remove,
     update

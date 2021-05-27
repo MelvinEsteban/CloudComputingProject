@@ -38,7 +38,7 @@ router.delete('/:id', async (req, res, next) => {
 })
 
 
-router.put('/:id', async (req, res, next) => {
+router.put('/', async (req, res, next) => {
     try {
         if (!req.body.hasOwnProperty('id')) {
             res.status(500).json({ error: 'No id provided' })
