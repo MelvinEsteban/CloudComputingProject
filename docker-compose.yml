@@ -5,15 +5,36 @@ services:
         image: mysql
         restart: always
         environment:
-            MYSQL_ROOT_PASSWORD: polytech
-            MYSQL_USER: polytech
-            MYSQL_PASSWORD: polytech
-            MYSQL_DATABASE: agendaDb
+            MYSQL_ROOT_PASSWORD: ${DB_PASS}
+            MYSQL_USER: ${DB_USER}
+            MYSQL_PASSWORD: ${DB_PASS}
+            MYSQL_DATABASE: ${DB_DATABASE}
         volumes:
             - ./db_data:/var/lib/mysql
+        ports: 
+            - "3306:3306"
 
     adminer:
         image: adminer
+        depends_on: 
+            - db
         restart: always
         ports:
             - 8080:8080
+    
+    users:
+        build: ./users-microservice
+        restart: always
+        depends_on: 
+            - db
+        environment: 
+            PORT: 3001
+            DB_HOST: 'db'
+            DB_USER : ${DB_USER}
+            DB_PASS: ${DB_PASS}
+            DB_DATABASE: ${DB_DATABASE}
+            DB_PORT: ${DB_PORT}
+
+        ports: 
+            - "3001:3001"
+        
