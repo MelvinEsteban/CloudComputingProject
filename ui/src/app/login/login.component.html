@@ -1,0 +1,16 @@
+<div id="page" class="w-40 mx-auto border rounded-3 p-3 shadow-sm container">
+    <div class="mb-3">
+        <label class="form-label">Username</label>
+        <input type="text" [(ngModel)]="username" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Password</label>
+        <input type="password" [(ngModel)]="password" class="form-control">
+    </div>
+
+    <button (click)="connexionLogin()" class="btn btn-primary">Sign in</button>
+    <button (click)="openDialog()" class="btn btn-primary ms-2">New account ?</button>
+    <div *ngIf="errorMessage!=''" class="alert alert-danger mt-3" role="alert">
+        {{errorMessage}}
+    </div>
+</div>

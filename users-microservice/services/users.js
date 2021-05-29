@@ -8,13 +8,8 @@ async function add(login, hash) {
             login, hash
         ]
     );
-
-    let message = 'Error in creating users';
-
-    if (result.affectedRows) {
-        message = 'Users created successfully';
-    }
-    return { message };
+    
+    return result;
 }
 
 async function get(login) {
@@ -24,15 +19,7 @@ async function get(login) {
             login
         ]
     );
-
-    let message = 'Error No users named ' + login;
-    let data = [];
-    if (result.length > 0) {
-        data = result;
-        message = 'GET SUCCESS';
-    }
-
-    return { message, data };
+    return result;
 }
 
 async function remove(id) {
@@ -70,10 +57,12 @@ async function update(id, login = null, passwordHash = null) {
     return { message };
 }
 
+
+
 module.exports = {
     ...module.exports,
     get,
     add,
     remove,
-    update
+    update,
 }

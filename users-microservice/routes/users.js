@@ -1,5 +1,8 @@
 const router = require('express').Router();
 const users = require('../services/users');
+const checkLogin = require('../services/checkLogin') ;
+const addUser = require('../services/addUser');
+
 
 router.get('/:login', async function (req, res, next) {
     try {
@@ -50,5 +53,35 @@ router.put('/', async (req, res, next) => {
     }
 })
 
+router.post('/checkLogin', async (req, res, next) => {
+    try {
+        if (req.body.hasOwnProperty('login') && req.body.hasOwnProperty('password')){
+            res.json( await checkLogin(req.body.login, req.body.password)) 
+        }
+        else {
+            res.json( {
+                status: 'error',
+                data :  { reason : 'No Login or Password provided' }
+            }) ;
+        }
+    } catch (error) {
+        console.error(error) ;
+    }
+})
 
+router.post('/addUser', async (req, res, next) => {
+    try {
+        if (req.body.hasOwnProperty('login') && req.body.hasOwnProperty('password')){
+            res.json( await addUser(req.body.login, req.body.password)) 
+        }
+        else {
+            res.json( {
+                status: 'error',
+                data :  { reason : 'No Login or Password provided' }
+            }) ;
+        }
+    } catch (error) {
+        console.error(error) ;
+    }
+})
 module.exports = router;

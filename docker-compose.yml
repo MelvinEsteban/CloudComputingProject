@@ -61,4 +61,23 @@ services:
         ports: 
             - "3002:3002"
     
+    events:
+        image: events:${TAG:-latest}
+        build:
+            context: ./events-microservice/
+            dockerfile: Dockerfile
+        restart: always
+        depends_on: 
+            - db
+        environment: 
+            PORT: 3003
+            DB_HOST: 'db'
+            DB_USER : ${DB_USER}
+            DB_PASS: ${DB_PASS}
+            DB_DATABASE: ${DB_DATABASE}
+            DB_PORT: ${DB_PORT}
+
+        ports: 
+            - "3003:3003"
+    
         
