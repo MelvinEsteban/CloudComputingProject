@@ -4,10 +4,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CalendarModule, DateAdapter, MOMENT, CalendarDateFormatter,CalendarMomentDateFormatter } from 'angular-calendar';
+import { CalendarModule, DateAdapter, MOMENT, CalendarDateFormatter, CalendarMomentDateFormatter } from 'angular-calendar';
 // import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { AgendaComponent } from './agenda/agenda.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavbarComponent } from './navbar/navbar.component';
 import { LoginComponent } from './login/login.component';
@@ -27,7 +27,15 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { adapterFactory } from 'angular-calendar/date-adapters/moment';
 import * as moment from 'moment';
-
+import { CreateEventDialogComponent } from './create-event-dialog/create-event-dialog.component';
+import {
+  NgxMatDatetimePickerModule,
+  NgxMatNativeDateModule,
+  NgxMatTimepickerModule
+} from '@angular-material-components/datetime-picker';
+import { MatSelectModule } from '@angular/material/select';
+import {MatSnackBarModule} from '@angular/material/snack-bar'; 
+import {MatButtonModule} from '@angular/material/button';
 export function momentAdapterFactory() {
   return adapterFactory(moment);
 }
@@ -41,7 +49,8 @@ export function momentAdapterFactory() {
     CreateAccountDialogComponent,
     AgendaPickerComponent,
     DatePickerComponent,
-    NewAgendaDialogComponent
+    NewAgendaDialogComponent,
+    CreateEventDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -70,7 +79,15 @@ export function momentAdapterFactory() {
     MatListModule,
     MatCheckboxModule,
     MatDatepickerModule,
-    MatMomentDateModule
+    MatMomentDateModule,
+    NgxMatDatetimePickerModule,
+    NgxMatTimepickerModule,
+    NgxMatNativeDateModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatSnackBarModule,
+    MatButtonModule
+
   ],
   providers: [
     {

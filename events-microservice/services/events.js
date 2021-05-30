@@ -9,14 +9,10 @@ async function add(title, description, dateBegin, dateEnd, idAgenda) {
         ]
     );
 
-    let message = 'Error in creating events';
-
     if (result.affectedRows) {
-        message = 'Events created successfully';
+        return { status: 'ok' , data : { id: result.insertId, message: 'Events created successfully'}}
     }
-    return {
-        message
-    };
+    return { status: 'error', data : { reason : 'Error in creating events'}} ;
 }
 
 async function getByTitle(title) {
@@ -62,26 +58,17 @@ async function getByAgenda(idAgenda) {
 
 }
 
-
-
-
 async function remove(id) {
     const result = await query(
         `DELETE FROM events WHERE id_event=?`,
         [id]
     );
 
-    let message = 'Error in deleting events';
-
     if (result.affectedRows) {
-        message = 'Agenda deleted successfully';
+        return { status: 'ok', data : { message : 'Event deleted successfully'}} ;
     }
-
-    return {
-        message
-    };
+    return { status: 'error', data : { reason :'Error in deleting events' }} ;
 }
-
 
 async function update(idEvent, title, description, dateBegin, dateEnd, idAgenda) {
     const result = await query(
@@ -92,16 +79,26 @@ async function update(idEvent, title, description, dateBegin, dateEnd, idAgenda)
             title, description, dateBegin, dateEnd, idAgenda, idEvent
         ]
     );
-
-    let message = 'Error in updating event';
-
     if (result.affectedRows) {
-        message = 'Event updated successfully';
+        return { status: 'ok', data : { message : 'Event updated successfully'}} ;
     }
+    return { status: 'error', data : { reason :'Error in updating event' }} ;
 
-    return {
-        message
-    };
+}
+
+async function getByUser(idUser) {
+    console.log('Call of getByBuser with params ', idUser) ;
+    const result = await query(
+        `SELECT events.* FROM events
+        JOIN agenda 
+        ON events.id_agenda = agenda.id_agenda
+        WHERE agenda.id_user= ?
+        `,
+        [
+            idUser
+        ]
+    )
+    return { status :'ok',data : {result} } ;
 }
 
 module.exports = {
@@ -110,5 +107,6 @@ module.exports = {
     getByTitle,
     add,
     remove,
-    update
+    update,
+    getByUser
 }

@@ -33,7 +33,7 @@ export class AgendaPickerComponent implements OnInit {
           }
         }
       });
-    // this.agendas = [{ id_agenda: 1, name: 'Test 1', id_user: 1, visible: false }, { id_agenda: 1, name: 'Test 2', id_user: 1, visible: false }]
+    this.onUpdateAgendaSelected() ;
   }
 
   openDialogAgenda(): void {
@@ -63,7 +63,6 @@ export class AgendaPickerComponent implements OnInit {
 
   editAgenda(event: Event, item: Agenda): void {
     event.stopPropagation();
-    console.log()
   }
 
   onUpdateAgendaSelected(): void {

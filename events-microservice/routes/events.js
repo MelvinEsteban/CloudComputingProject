@@ -1,6 +1,9 @@
 const router = require('express').Router();
 const events = require('../services/events');
 
+/**
+ * route useless
+ */
 router.get('/idAgenda/:idAgenda', async function (req, res, next) {
     try {
         res.json(await events.getByAgenda(req.params.idAgenda));
@@ -10,6 +13,10 @@ router.get('/idAgenda/:idAgenda', async function (req, res, next) {
     }
 });
 
+
+/**
+ * Route useless
+ */
 router.get('/title/:title', async function (req, res, next) {
     try {
         res.json(await events.getByTitle(req.params.title));
@@ -35,10 +42,10 @@ router.post('/', async (req, res, next) => {
                 error: 'No date provided'
             })
         } else {
-            const dateBegin = parseInt(req.body.date_begin, 10);
-            const dateEnd = parseInt(req.body.date_end, 10) ;
+            const dateBegin = req.body.date_begin.replace(/\+/g, " ");
+            const dateEnd = req.body.date_end.replace(/\+/g, " ") ;
             res.json(await events.add(
-                req.body.title, req.body.description,
+                req.body.title.replace(/\+/g, " "), req.body.description.replace(/\+/g, " "),
                 dateBegin, dateEnd, req.body.id_agenda));
         }
     } catch (err) {
@@ -78,9 +85,12 @@ router.put('/', async (req, res, next) => {
                 error : 'Unknow  id event'
             }) ;
         } else {
+            const start = req.body.date_begin.replace(/\+/g, " ");
+            const end = req.body.date_end.replace(/\+/g, " ");
+            const title = req.body.title.replace(/\+/g, " ");
             res.json(await events.update(req.body.id_event,
-                req.body.title, req.body.description,
-                req.body.date_begin, req.body.date_end, req.body.id_agenda));
+                title, req.body.description,
+                start, end, req.body.id_agenda));
         }
     } catch (err) {
         console.error(`Error while updating events `, err.message);
@@ -88,5 +98,13 @@ router.put('/', async (req, res, next) => {
     }
 })
 
+router.get('/:idUser', async (req, res, next) => {
+    try {
+        res.json( await events.getByUser(req.params.idUser)) ;
+    } catch (error) {
+        console.error(error) ;
+        next(err) ;
+    }
+}); 
 
 module.exports = router;

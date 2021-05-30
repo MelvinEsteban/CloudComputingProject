@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
   canActivateChild(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot) : boolean|UrlTree {
-      return true ; //Mode Production
+      // return true ; //Mode Production
       if (this.authService.connected){
         return true;
       }

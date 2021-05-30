@@ -1,29 +1,37 @@
-<div id='main-agenda'class="container-fluid d-flex flex-row justify-content-between mt-2">
-    <div class="d-flex flex-column me-2 w-20 mt-6">
-        <app-date-picker (eventDate)="onUpdateDate($event)" class="border border-1 rounded"></app-date-picker>
+<div id='main-agenda' class="container-fluid d-flex flex-row justify-content-between mt-2">
+    <div class="d-flex flex-column me-2 w-20 mt-2">
+        <app-date-picker (eventDate)="onUpdateDate($event)" class="border border-1 rounded mb-3"></app-date-picker>
         <app-agenda-picker (eventAgenda)="onUpdateAgenda($event)"></app-agenda-picker>
     </div>
     <div class="flex-grow-1">
         <div class="row text-center">
             <div class="col-md-4">
-                <div class="btn-group">
-                    <div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
+                <div class="d-flex flex-row justify-content-center align-items-center">
+                    <div mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
                         (viewDateChange)="closeOpenMonthViewDay()">
-                        Previous
+                        <button mat-mini-fab color="primary"  aria-label="Example icon button with a home icon">
+                            <mat-icon>keyboard_arrow_left</mat-icon>
+                          </button>
                     </div>
-                    <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
-                        Today
+                    <div class="mx-3" mwlCalendarToday [(viewDate)]="viewDate">
+                        <button mat-raised-button color="primary">  Today  </button>
                     </div>
-                    <div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
+                    <div  mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
                         (viewDateChange)="closeOpenMonthViewDay()">
-                        Next
+                        <button  mat-mini-fab color="primary"  aria-label="Example icon button with a home icon">
+                            <mat-icon>keyboard_arrow_right</mat-icon>
+                          </button>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+
             </div>
             <div class="col-md-4">
+                <button mat-fab color="primary" (click)="openDialogCreateEvent()" class="me-5" aria-label="Add Event">
+                    <mat-icon>add</mat-icon>
+                </button>
                 <div class="btn-group">
                     <div class="btn btn-primary" (click)="setView(CalendarView.Month)"
                         [class.active]="view === CalendarView.Month">
@@ -44,29 +52,20 @@
 
         <div class="overflow-auto h-100">
             <div [ngSwitch]="view">
-                <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events"
-                    [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen">
+                <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate"
+                    [events]="visibleEvents" [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen"
+                    (dayClicked)="dayClicked($event.day)" (eventTimesChanged)="eventTimesChanged($event)">
                 </mwl-calendar-month-view>
-                <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events"
-                    [refresh]="refresh">
+                <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="visibleEvents"
+                    [refresh]="refresh" (hourSegmentClicked)="hourClicked($event)"
+                    (eventTimesChanged)="eventTimesChanged($event)">
                 </mwl-calendar-week-view>
-                <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events"
-                    [refresh]="refresh">
-                </mwl-calendar-day-view >
+                <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="visibleEvents"
+                    [refresh]="refresh" (hourSegmentClicked)="hourClicked($event)"
+                    (eventTimesChanged)="eventTimesChanged($event)">
+                </mwl-calendar-day-view>
             </div>
         </div>
-
-
-
-        <!-- (dayClicked)="dayClicked($event.day)"
-            (eventClicked)="handleEvent('Clicked', $event.event)"
-              (eventTimesChanged)="eventTimesChanged($event)" -->
-
-        <!-- (eventClicked)="handleEvent('Clicked', $event.event)"
-              (eventTimesChanged)="eventTimesChanged($event)" -->
-
-        <!-- (eventClicked)="handleEvent('Clicked', $event.event)"
-              (eventTimesChanged)="eventTimesChanged($event)" -->
     </div>
 
 </div>

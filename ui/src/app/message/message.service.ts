@@ -27,7 +27,7 @@ export class MessageService {
       {
         withCredentials: true,
         headers: new HttpHeaders()
-        .set('Content-Type', 'application/x-www-form-urlencoded')
+          .set('Content-Type', 'application/x-www-form-urlencoded')
       }
     );
   }
@@ -40,22 +40,27 @@ export class MessageService {
   }
 
   sendPut(url: string, data: any): Observable<resBackend> {
-    const body = new FormData();
-
+    const body = new URLSearchParams();
     if (data != null) {
       for (const elt of Object.keys(data)) {
-        body.append(elt, data[elt]);
+        body.set(elt.toString(), data[elt]);
       }
     }
 
     return this.http.put<resBackend>(
       url,
-      body,
-      { withCredentials: true }
+      body.toString(),
+      {
+        withCredentials: true,
+        headers: new HttpHeaders()
+          .set('Content-Type', 'application/x-www-form-urlencoded')
+      },
+
     );
   }
 
   sendDelete(url: string): Observable<resBackend> {
+    console.log("sendDelete");
     return this.http.delete<resBackend>(
       url,
       { withCredentials: true }
