@@ -4,12 +4,30 @@
             My agenda
         </mat-panel-title>
         <mat-panel-description>
-            
+
         </mat-panel-description>
     </mat-expansion-panel-header>
-    <button type="button" class="btn btn-light bg-transparent align-middle d-flex flex-row ">
-            <mat-icon class="me-1">add</mat-icon> 
-            <p>new Agenda</p> 
-    </button>
 
+    <mat-selection-list>
+        <mat-list-item *ngFor="let item of agendas" class="hover">
+            <div class="d-flex justify-content-between align-items-center w-100">
+                <div class="flex-grow-1">
+                    <mat-checkbox [(ngModel)]="item.visible" (change)="onUpdateAgendaSelected()">
+                        {{item.name}}
+                    </mat-checkbox>
+                </div>
+                <div>
+                    <button mat-icon-button (click)="editAgenda($event, item)" class="btn btn-sm">
+                        <mat-icon matListIcon>edit</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </mat-list-item>
+    </mat-selection-list>
+
+    <button type="button" (click)="openDialogAgenda()"
+        class="btn btn-light bg-transparent align-middle d-flex flex-row ">
+        <mat-icon class="me-1">add</mat-icon>
+        <p>new Agenda</p>
+    </button>
 </mat-expansion-panel>

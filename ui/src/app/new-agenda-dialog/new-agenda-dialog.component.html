@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>New agenda</h1>
+<div mat-dialog-content>
+    <mat-form-field>
+        <mat-label>Name </mat-label>
+        <input matInput [(ngModel)]="data.name">
+    </mat-form-field>
+
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button mat-dialog-close class="btn btn-primary" (click)="cancelNewAgenda()">Cancel</button>
+    <button mat-button class="btn btn-primary ms-2" [mat-dialog-close]="data.name" cdkFocusInitial>Ok</button>
+</div>

@@ -1,7 +1,7 @@
-<div id='main-agenda'class="container-fluid d-flex flex-row justify-content-between mt-5">
-    <div class="d-flex flex-column me-2 w-20">
-        <app-date-picker></app-date-picker>
-        <app-agenda-picker></app-agenda-picker>
+<div id='main-agenda'class="container-fluid d-flex flex-row justify-content-between mt-2">
+    <div class="d-flex flex-column me-2 w-20 mt-6">
+        <app-date-picker (eventDate)="onUpdateDate($event)" class="border border-1 rounded"></app-date-picker>
+        <app-agenda-picker (eventAgenda)="onUpdateAgenda($event)"></app-agenda-picker>
     </div>
     <div class="flex-grow-1">
         <div class="row text-center">

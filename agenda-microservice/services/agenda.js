@@ -9,14 +9,12 @@ async function add(name, idUser) {
         ]
     );
 
-    let message = 'Error in creating agenda';
-
-    if (result.affectedRows) {
-        message = 'Agenda created successfully';
+    if (result.affectedRows){
+        return { status:'ok', data : { id : result.insertId}};
     }
-    return {
-        message
-    };
+    else {
+        return { status: 'error', data : { reason : "Error in creating agenda"}} ;
+    }
 }
 
 async function getByName(name) {
@@ -41,6 +39,7 @@ async function getByName(name) {
 }
 
 async function getByUser(idUser) {
+    console.log('Selection of agenda in the DB of user', idUser);
     const result = await query(
         `SELECT * FROM agenda WHERE id_user=?`,
         [
@@ -48,18 +47,7 @@ async function getByUser(idUser) {
         ]
     );
 
-    let message = 'Error no Agenda assigned to the user : ' + idUser;
-    let data = [];
-    if (result.length > 0) {
-        data = result;
-        message = 'GET SUCCESS';
-    }
-
-    return {
-        message,
-        data
-    };
-
+    return { status :'ok', data : result}
 }
 
 
