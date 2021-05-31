@@ -159,6 +159,14 @@ export class AgendaComponent implements OnInit {
         ...this.default
       }
     ];
+    this.visibleEvents = [
+      ...this.visibleEvents,
+      {
+        ...event,
+        ...this.default
+      }
+    ];
+    this.refresh.next() ;
   }
 
   updateEvent(event: MyEvent) {

@@ -12,6 +12,8 @@ services:
             MYSQL_DATABASE: ${DB_DATABASE}
         volumes:
             - ./db_data:/var/lib/mysql
+            - "./mysql/CreateTable.sql:/docker-entrypoint-initdb.d/1.sql"
+
         ports: 
             - "3306:3306"
 
@@ -79,5 +81,19 @@ services:
 
         ports: 
             - "3003:3003"
-    
+    ui:
+        images: ui:${TAG:-latest}
+        build:
+            context: ./ui/
+            dockerfile: Dockerfile
+            restart: always
+            depends_on: 
+                - users
+                - events
+                - agenda
+            environment: 
+                
+            ports: 
+                - "4200:80"
+
         
