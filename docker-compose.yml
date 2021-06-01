@@ -41,6 +41,7 @@ services:
             DB_PASS: ${DB_PASS}
             DB_DATABASE: ${DB_DATABASE}
             DB_PORT: ${DB_PORT}
+            ACCES_CONTROL: 'http://localhost:3000'
 
         ports: 
             - "3001:3001"
@@ -60,6 +61,7 @@ services:
             DB_PASS: ${DB_PASS}
             DB_DATABASE: ${DB_DATABASE}
             DB_PORT: ${DB_PORT}
+            ACCES_CONTROL: 'http://localhost:3000'
 
         ports: 
             - "3002:3002"
@@ -79,6 +81,7 @@ services:
             DB_PASS: ${DB_PASS}
             DB_DATABASE: ${DB_DATABASE}
             DB_PORT: ${DB_PORT}
+            ACCES_CONTROL: 'http://localhost:3000'
 
         ports: 
             - "3003:3003"
@@ -86,16 +89,14 @@ services:
     ui:
         image: ui:${TAG:-latest}
         build:
-            context: ./polyAgenda/
+            context: ./ui/
             dockerfile: Dockerfile
         restart: always
         depends_on: 
             - users
             - events
             - agenda
-        environment: 
-            PORT: 4200
         ports: 
-            - "4200:4200"
+            - "3000:80"
 
         
