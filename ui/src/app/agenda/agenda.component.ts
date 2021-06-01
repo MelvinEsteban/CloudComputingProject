@@ -81,14 +81,6 @@ export class AgendaComponent implements OnInit {
         }
       }
     )
-    // Mode production
-    // this.events = [ ...this.events, {
-    //   idAgenda: 1,
-    //   title : 'Editable',
-    //   start : new Date(),
-    //   end: new Date(new Date().getTime()+3600*1000),
-    //   ...this.default
-    // }]
   }
 
   deleteEvent(eventToDelete: MyEvent) {
@@ -182,7 +174,7 @@ export class AgendaComponent implements OnInit {
     }
     this.messageService.sendPut(environment.urlEvents, data).subscribe((res) => {
       if (res.status === 'ok') {
-        this._snackBar.open('Mise a jour OK', undefined, { duration: 3000 });
+        this._snackBar.open('Event updated', undefined, { duration: 3000 });
       }
       else if(res.status === 'error') {
         this._snackBar.open('Error' + res.data.reason, undefined, { duration: 3000 });

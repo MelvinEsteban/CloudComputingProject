@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS agenda (
   id_user int NOT NULL,
   PRIMARY KEY (id_agenda),
   KEY id_user (id_user),
-  CONSTRAINT agenda_ibfk_1 FOREIGN KEY (id_user) REFERENCES users (id_user)
+  CONSTRAINT agenda_ibfk_1 FOREIGN KEY (id_user) REFERENCES users (id_user) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS events (
   id_agenda int NOT NULL,
   PRIMARY KEY (id_event),
   KEY id_agenda (id_agenda),
-  CONSTRAINT events_ibfk_1 FOREIGN KEY (id_agenda) REFERENCES agenda (id_agenda)
+  CONSTRAINT events_ibfk_1 FOREIGN KEY (id_agenda) REFERENCES agenda (id_agenda) ON DELETE CASCADE 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 

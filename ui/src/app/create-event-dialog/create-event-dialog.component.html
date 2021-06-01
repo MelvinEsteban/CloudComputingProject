@@ -1,8 +1,6 @@
 <h1 mat-dialog-title>New events</h1>
 <div mat-dialog-content>
     <div class="d-flex flex-column">
-        <!-- [(ngModel)]="event.end"
-            (ngModelChange)="refresh.next()" -->
         <mat-form-field>
             <input matInput [(ngModel)]="data.event.title" (change)="updateDisabledButton()" placeholder="Title">
         </mat-form-field>

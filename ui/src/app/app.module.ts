@@ -36,6 +36,8 @@ import {
 import { MatSelectModule } from '@angular/material/select';
 import {MatSnackBarModule} from '@angular/material/snack-bar'; 
 import {MatButtonModule} from '@angular/material/button';
+import { UpdateAgendaDialogComponent } from './update-agenda-dialog/update-agenda-dialog.component';
+
 export function momentAdapterFactory() {
   return adapterFactory(moment);
 }
@@ -51,6 +53,7 @@ export function momentAdapterFactory() {
     DatePickerComponent,
     NewAgendaDialogComponent,
     CreateEventDialogComponent,
+    UpdateAgendaDialogComponent,
   ],
   imports: [
     BrowserModule,

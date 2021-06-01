@@ -58,16 +58,13 @@ async function remove(id) {
         `DELETE FROM agenda WHERE id_agenda=?`,
         [id]
     );
-
-    let message = 'Error in deleting agenda';
-
-    if (result.affectedRows) {
-        message = 'Agenda deleted successfully';
+    
+    if (result.affectedRows){
+        return { status:'ok', data : { message : "Agenda deleted successfully"}};
     }
-
-    return {
-        message
-    };
+    else {
+        return { status: 'error', data : { reason : "Error in deleting agenda"}} ;
+    }
 }
 
 
