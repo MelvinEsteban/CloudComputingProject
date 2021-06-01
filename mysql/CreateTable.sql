@@ -9,7 +9,7 @@ SET NAMES utf8mb4;
 
 CREATE TABLE IF NOT EXISTS agenda (
   id_agenda int NOT NULL AUTO_INCREMENT,
-  nom varchar(255) NOT NULL,
+  name varchar(255) NOT NULL,
   id_user int NOT NULL,
   PRIMARY KEY (id_agenda),
   KEY id_user (id_user),
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS events (
   id_event int NOT NULL AUTO_INCREMENT,
   date_begin timestamp NOT NULL,
   date_end timestamp NOT NULL,
-  title varchar(255) NOTTABLENULL,
+  title varchar(255) NOT NULL,
   description text NOT NULL,
   id_agenda int NOT NULL,
   PRIMARY KEY (id_event),

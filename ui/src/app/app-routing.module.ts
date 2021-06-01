@@ -5,6 +5,7 @@ import { AuthGuard } from './auth.guard';
 import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: '/agenda', pathMatch: 'full' },
   { path : 'connexion', component :LoginComponent},
   {
     path: '',
