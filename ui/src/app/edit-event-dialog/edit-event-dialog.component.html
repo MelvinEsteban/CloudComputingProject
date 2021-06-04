@@ -1,0 +1,50 @@
+<h1 mat-dialog-title>Update event</h1>
+<div mat-dialog-content>
+    <div class="d-flex flex-column">
+        <mat-form-field>
+            <input matInput [(ngModel)]="data.event.title" placeholder="Title">
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput [ngxMatDatetimePicker]="picker" placeholder="Start date" [(ngModel)]="data.event.start">
+            <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [showSeconds]="showSeconds"
+                [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond" [touchUi]="touchUi"
+                [color]="color">
+                <!-- Custom icon or text of Apply icon -->
+                <ng-template>
+                    <mat-icon>done</mat-icon>
+                </ng-template>
+            </ngx-mat-datetime-picker>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput [ngxMatDatetimePicker]="picker2" placeholder="End date" [(ngModel)]="data.event.end">
+            <mat-datepicker-toggle matSuffix [for]="$any(picker2)"></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #picker2 [showSpinners]="showSpinners" [showSeconds]="showSeconds"
+                [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond" [touchUi]="touchUi"
+                [color]="color">
+                <!-- Custom icon or text of Apply icon -->
+                <ng-template>
+                    <mat-icon>done</mat-icon>
+                    
+                </ng-template>
+            </ngx-mat-datetime-picker>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Agenda</mat-label>
+            <mat-select [(ngModel)]="data.event.idAgenda" name="id_agenda">
+                <mat-option *ngFor="let agenda of data.agendas" [value]="agenda.id_agenda">
+                    {{agenda.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+    </div>
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button mat-dialog-close class="btn btn-primary" (click)="onCancelNewEvent()"><mat-icon>cancel</mat-icon></button>
+    <button mat-button class="btn btn-primary ms-2" [mat-dialog-close]="data.event"><mat-icon>done</mat-icon></button>
+    <button mat-raised-button color="warn" [mat-dialog-close]="deleteString"><mat-icon>delete</mat-icon></button>
+</div>

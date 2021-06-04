@@ -12,6 +12,15 @@ async function add(login, hash) {
     return result;
 }
 
+async function getId( idUser) {
+    const result = await query(`SELECT * FROM users WHERE id_user=?`,
+    [
+        idUser
+    ]);
+    return result ;
+}
+
+
 async function get(login) {
     const result = await query(
         `SELECT * FROM users WHERE login=?`,
@@ -47,7 +56,6 @@ async function update(id, login = null, passwordHash = null) {
             login, passwordHash, id
         ]
     );
-
     let message = 'Error in updating users';
 
     if (result.affectedRows) {
@@ -58,6 +66,16 @@ async function update(id, login = null, passwordHash = null) {
 }
 
 
+async function updatePassword(idUser, passwordHash){
+    const result = await query(
+        `UPDATE users SET password_hash=?
+        WHERE id_user=?`,
+        [
+            passwordHash,idUser
+        ]
+    )
+    return result ;
+}
 
 module.exports = {
     ...module.exports,
@@ -65,4 +83,5 @@ module.exports = {
     add,
     remove,
     update,
+    updatePassword
 }

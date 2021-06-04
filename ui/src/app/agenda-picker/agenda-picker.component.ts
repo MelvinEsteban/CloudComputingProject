@@ -32,11 +32,11 @@ export class AgendaPickerComponent implements OnInit {
         if (res.status === 'ok') {
           for (let index = 0; index < res.data.length; index++) {
             const element = res.data[index];
-            this.agendas.push({ ...element, visible: false })
+            this.agendas.push({ ...element, visible: true })
           }
         }
+        this.onUpdateAgendaSelected();
       });
-    this.onUpdateAgendaSelected();
   }
 
   ngOnInit(): void {
@@ -58,9 +58,10 @@ export class AgendaPickerComponent implements OnInit {
                 id_agenda: res.data.id,
                 name: result,
                 id_user: this.authService.loggedIdUser,
-                visible: false
+                visible: true
               });
               this.changeDetection.detectChanges();
+              this.onUpdateAgendaSelected() ;
             }
           }
         );
@@ -74,9 +75,9 @@ export class AgendaPickerComponent implements OnInit {
         this.agendas = this.agendas.filter((event) => event.id_agenda !== agendaToDelete.id_agenda);
         this._snackBar.open("Agenda deleted : " + agendaToDelete.name, undefined, { duration: 3000 });
         this.changeDetection.detectChanges();
-        this.onUpdateAgendaSelected() ;
+        this.onUpdateAgendaSelected();
       } else if (res.status === 'error') {
-        this._snackBar.open("Error while deleting : " + res.data.reason, undefined, { duration : 3000});
+        this._snackBar.open("Error while deleting : " + res.data.reason, undefined, { duration: 3000 });
       }
     })
   }
@@ -85,15 +86,27 @@ export class AgendaPickerComponent implements OnInit {
     event.stopPropagation();
     const dialogRef = this.dialog.open(UpdateAgendaDialogComponent, {
       width: '30wh',
-      data: { agenda: item }
+      data: { agenda: { ...item } }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        console.log(result);
+        console.log(item);
         if (result === 'delete') {
-          this.deleteAgenda(item) ;
+          this.deleteAgenda(item);
         } else if (JSON.stringify(item) !== JSON.stringify(result)) {
-
+          this.messageService.sendPut(environment.urlAgenda, result).subscribe(retour => {
+            if (retour.status === 'ok') {
+              const index = this.agendas.findIndex((agenda) => agenda.id_agenda === result.id_agenda);
+              this.agendas[index] = { ...result };
+              this.changeDetection.detectChanges();
+              this._snackBar.open("Schedule uptaded", undefined, { duration: 3000 });
+            }
+            else if (retour.status === 'error') {
+              this._snackBar.open("Error" + retour.data.reason, undefined, { duration: 3000 });
+            }
+          });
         }
       }
     })

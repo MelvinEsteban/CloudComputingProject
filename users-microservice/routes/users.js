@@ -2,6 +2,7 @@ const router = require('express').Router();
 const users = require('../services/users');
 const checkLogin = require('../services/checkLogin') ;
 const addUser = require('../services/addUser');
+const editPassword = require('../services/editPassword') ;
 
 
 router.get('/:login', async function (req, res, next) {
@@ -84,4 +85,20 @@ router.post('/addUser', async (req, res, next) => {
         console.error(error) ;
     }
 })
+
+router.put('/editPassword', async (req, res) => {
+    try {
+        if (req.body.hasOwnProperty('id_user') && req.body.hasOwnProperty('password')){
+            res.json( await editPassword(req.body.id_user, req.body.password)) ;
+        } else {
+            res.json( {
+                status : 'error',
+                data : { reason : 'No id or password provided'} 
+            }) ;
+        }
+    } catch (error) {
+        console.error(error) ;
+    }
+})
+
 module.exports = router;

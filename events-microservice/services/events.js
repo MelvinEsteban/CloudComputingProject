@@ -71,6 +71,7 @@ async function remove(id) {
 }
 
 async function update(idEvent, title, description, dateBegin, dateEnd, idAgenda) {
+    console.log('Call of update event ', idEvent) ;
     const result = await query(
         `UPDATE events 
             SET title=?, description=?, date_begin=?, date_end=?, id_agenda=?

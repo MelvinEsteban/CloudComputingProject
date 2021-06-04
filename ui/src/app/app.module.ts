@@ -37,6 +37,9 @@ import { MatSelectModule } from '@angular/material/select';
 import {MatSnackBarModule} from '@angular/material/snack-bar'; 
 import {MatButtonModule} from '@angular/material/button';
 import { UpdateAgendaDialogComponent } from './update-agenda-dialog/update-agenda-dialog.component';
+import { EditEventDialogComponent } from './edit-event-dialog/edit-event-dialog.component';
+import { EditPasswordDialogComponent } from './edit-password-dialog/edit-password-dialog.component';
+
 
 export function momentAdapterFactory() {
   return adapterFactory(moment);
@@ -54,6 +57,8 @@ export function momentAdapterFactory() {
     NewAgendaDialogComponent,
     CreateEventDialogComponent,
     UpdateAgendaDialogComponent,
+    EditEventDialogComponent,
+    EditPasswordDialogComponent,
   ],
   imports: [
     BrowserModule,

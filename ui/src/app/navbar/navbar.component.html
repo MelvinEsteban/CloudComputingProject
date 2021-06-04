@@ -5,8 +5,8 @@
 
         <div *ngIf="this.authService.connected" class="d-flex flex-row">
             <p class="me-5 mt-2" >Logged as <strong>{{this.authService.loggedLoginUser}}</strong></p>
-            <button  (click)="signOut()" type="button" class="btn btn-outline-secondary btn-sm">Sign out</button>
+            <button mat-mini-fab color="primary" (click)="openDialogEdit()" class="mx-3"><mat-icon>settings_icon</mat-icon></button>
+            <button mat-mini-fab color="primary" (click)="signOut()"><mat-icon>exit_to_app</mat-icon></button>
         </div>
     </div>
-    
 </nav>

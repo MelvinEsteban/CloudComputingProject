@@ -60,7 +60,6 @@ export class MessageService {
   }
 
   sendDelete(url: string): Observable<resBackend> {
-    console.log("sendDelete");
     return this.http.delete<resBackend>(
       url,
       { withCredentials: true }

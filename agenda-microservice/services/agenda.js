@@ -77,16 +77,13 @@ async function update(idAgenda, name, idUser) {
             name, idUser, idAgenda
         ]
     );
-
-    let message = 'Error in updating agenda';
-
-    if (result.affectedRows) {
-        message = 'Agenda updated successfully';
+    
+    if (result.affectedRows){
+        return { status:'ok', data : { message : "Agenda updated successfully"}};
     }
-
-    return {
-        message
-    };
+    else {
+        return { status: 'error', data : { reason : "Error in updating agenda"}} ;
+    }
 }
 
 module.exports = {

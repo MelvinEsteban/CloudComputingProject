@@ -55,7 +55,17 @@ router.put('/', async (req, res, next) => {
                 error: 'No id provided'
             })
         }
-        res.json(await agenda.update(req.body.id_Agenda, req.body.name, req.body.id_user))
+        if (!req.body.hasOwnProperty('name')) {
+            res.status(500).json({
+                error: 'No name provided'
+            })
+        }
+        if (!req.body.hasOwnProperty('id_user')) {
+            res.status(500).json({
+                error: 'No id_user provided'
+            })
+        }
+        res.json(await agenda.update(req.body.id_agenda, req.body.name, req.body.id_user))
     } catch (err) {
         console.error(`Error while modifying agenda `, err.message);
         next(err);
