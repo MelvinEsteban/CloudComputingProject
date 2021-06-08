@@ -5,5 +5,5 @@ Ce projet a été réalisé dans le cadre du cours de Cloud Computing de 4ème a
 
 ## How to install
 
-`docker compose up`: Le port utilisé est le port `3000`
+`docker compose up`: La page web se trouve à l'adresse localhost:3000
 
