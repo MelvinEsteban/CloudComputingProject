@@ -10,10 +10,7 @@ SET NAMES utf8mb4;
 CREATE TABLE IF NOT EXISTS agenda (
   id_agenda int NOT NULL AUTO_INCREMENT,
   name varchar(255) NOT NULL,
-  id_user int NOT NULL,
-  PRIMARY KEY (id_agenda),
-  KEY id_user (id_user),
-  CONSTRAINT agenda_ibfk_1 FOREIGN KEY (id_user) REFERENCES users (id_user) ON DELETE CASCADE
+  PRIMARY KEY (id_agenda)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
@@ -36,3 +33,11 @@ CREATE TABLE IF NOT EXISTS users (
   password_hash varchar(255) NOT NULL,
   PRIMARY KEY (id_user)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE IF NOT EXISTS `agendaUsers` (
+  `id_user` int NOT NULL,
+  `id_agenda` int NOT NULL,
+  PRIMARY KEY (`id_user`, `id_agenda`),
+  FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`) ON DELETE CASCADE,
+  FOREIGN KEY (`id_agenda`) REFERENCES `agenda` (`id_agenda`) ON DELETE CASCADE
+);

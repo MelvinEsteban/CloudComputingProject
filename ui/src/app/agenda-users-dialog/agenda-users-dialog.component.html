@@ -1,0 +1,36 @@
+<h1 mat-dialog-title>Users of the agenda</h1>
+<div mat-dialog-content>
+    <div class="d-flex flex-row justify-content-around ">
+        <mat-form-field class="w-90">
+            <mat-label>Add an user</mat-label>
+            <input type="text" matInput placeholder="Login" [formControl]="controlUser" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let option of lTotalUsers" [value]="option.login">
+                    {{option.login}}
+                </mat-option>
+            </mat-autocomplete>
+            
+        </mat-form-field>
+        <button matSuffix mat-icon-button (click)="addUser()">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
+
+    <h5 class="my-2">List of users</h5>
+    <ul class="list-group list-group-flush">
+        <li *ngFor="let item of lUsers; last as last" role="listitem"
+            class="d-flex flex-row justify-content-between list-group-item list-group-item-action">
+            <div class="my-auto">
+                {{item.login}}
+            </div>
+            <button mat-icon-button color="primary" (click)="removeUser(item)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </li>
+    </ul>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onClose()" cdkFocusInitial>
+        <mat-icon>done</mat-icon>
+    </button>
+</div>

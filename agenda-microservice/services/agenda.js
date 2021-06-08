@@ -1,16 +1,18 @@
 const query = require('./db');
+const addUsers = require('./addUsers') ;
 
 async function add(name, idUser) {
+    console.log('add Agenda : ', name) ; 
     const result = await query(
-        `INSERT INTO agenda (name, id_user)
-        VALUES  (?,?)`,
+        `INSERT INTO agenda (name)
+        VALUES  (?)`,
         [
-            name, idUser
+            name
         ]
     );
-
+    
     if (result.affectedRows){
-        return { status:'ok', data : { id : result.insertId}};
+        return await addUsers(result.insertId, idUser);
     }
     else {
         return { status: 'error', data : { reason : "Error in creating agenda"}} ;
@@ -41,7 +43,10 @@ async function getByName(name) {
 async function getByUser(idUser) {
     console.log('Selection of agenda in the DB of user', idUser);
     const result = await query(
-        `SELECT * FROM agenda WHERE id_user=?`,
+        `SELECT agenda.* FROM agenda
+        JOIN agendaUsers
+        ON agendaUsers.id_agenda = agenda.id_agenda
+        WHERE agendaUsers.id_user = ?`,
         [
             idUser
         ]
@@ -68,10 +73,10 @@ async function remove(id) {
 }
 
 
-async function update(idAgenda, name, idUser) {
+async function update(idAgenda, name) {
     const result = await query(
         `UPDATE agenda 
-            SET name=?, id_user=?
+            SET name=?,
             WHERE id_agenda=?`,
         [
             name, idUser, idAgenda

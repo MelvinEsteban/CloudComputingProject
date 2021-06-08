@@ -91,9 +91,9 @@ async function getByUser(idUser) {
     console.log('Call of getByBuser with params ', idUser) ;
     const result = await query(
         `SELECT events.* FROM events
-        JOIN agenda 
-        ON events.id_agenda = agenda.id_agenda
-        WHERE agenda.id_user= ?
+        JOIN agendaUsers
+        ON events.id_agenda = agendaUsers.id_agenda
+        WHERE agendaUsers.id_user= ?
         `,
         [
             idUser

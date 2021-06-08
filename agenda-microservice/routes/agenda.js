@@ -1,5 +1,8 @@
 const router = require('express').Router();
 const agenda = require('../services/agenda');
+const removeUsers = require('../services/removeUsers');
+const getUsers = require('../services/getUsers') ;
+const addUsers = require('../services/addUsers');
 
 router.get('/:idUser', async function (req, res, next) {
     try {
@@ -73,4 +76,44 @@ router.put('/', async (req, res, next) => {
 })
 
 
+router.post('/deleteUsers', async (req, res, next) => {
+    try {  
+        if (req.body.hasOwnProperty('id_agenda') && req.body.hasOwnProperty('id_user')){
+            res.json( await removeUsers(req.body.id_agenda, req.body.id_user)) ;
+        }
+        else {
+            res.status(500).json({
+                status :'error', data : { reason : 'Argument missing' }
+            }) ;
+        }
+    } catch (error) {
+        console.error(error);
+        next(error) ;
+    }
+});
+
+router.get('/getAll/:idAgenda', async (req,res ,next ) => {
+    try {
+        res.json( await getUsers(req.params.idAgenda)) ;
+    } catch (error) {
+        console.error(console.error());
+        next(error) ;
+    }
+});
+
+router.post('/addUsers', async (req, res , next) => {
+    try {
+        if (req.body.hasOwnProperty('id_agenda') && req.body.hasOwnProperty('id_user')){
+            res.json( await addUsers(req.body.id_agenda, req.body.id_user)) ;
+        }
+        else {
+            res.status(500).json({
+                status :'error', data : { reason : 'Argument missing' }
+            }) ;
+        }
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+} );
 module.exports = router;

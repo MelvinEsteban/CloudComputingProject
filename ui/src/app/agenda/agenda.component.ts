@@ -61,19 +61,21 @@ export class AgendaComponent implements OnInit {
   }
 
   constructor(private modal: NgbModal, private messageService: MessageService, public dialog: MatDialog, private authService: AuthService, private _snackBar: MatSnackBar
-   ) { }
+   ) {
+    }
 
   ngOnInit(): void {
     this.messageService.sendGet(environment.urlEvents + '/' + this.authService.loggedIdUser).subscribe(
       (res) => {
         if (res.status === 'ok') {
+          const TimeZoneOffset = new Date().getTimezoneOffset() ;
           for (let index = 0; index < res.data.result.length; index++) {
             const element = res.data.result[index];
-            console.log(element.date_begin, moment.utc(element.date_begin).toDate()) ;
+            console.log(element.date_begin, moment(element.date_begin).add(TimeZoneOffset, 'minutes').toDate());
             this.events.push({
               id: element.id_event,
-              start: moment.utc(element.date_begin).toDate(),
-              end: moment.utc(element.date_end).toDate(),
+              start: moment(element.date_begin).add(TimeZoneOffset, 'minutes').toDate(),
+              end: moment(element.date_end).add(TimeZoneOffset, 'minutes').toDate(),
               title: element.title,
               description: element.description,
               idAgenda: element.id_agenda,
@@ -151,11 +153,13 @@ export class AgendaComponent implements OnInit {
   }
 
   addEvent(event: MyEvent): void {
+    const troll = event.start;
+    console.log(troll, moment(troll).format("YYYY-MM-DD HH:mm:ss"));
     const data = {
       id_event: event.id,
       title: event.title,
-      date_begin: moment(event.start).format("YYYY-MM-DD hh:mm:ss"),
-      date_end: moment(event.end).format("YYYY-MM-DD hh:mm:ss"),
+      date_begin: moment(event.start).format("YYYY-MM-DD HH:mm:ss"),
+      date_end: moment(event.end).format("YYYY-MM-DD HH:mm:ss"),
       description: '',
       id_agenda: event.idAgenda,
     }
@@ -188,8 +192,8 @@ export class AgendaComponent implements OnInit {
     const data = {
       id_agenda: event.idAgenda,
       id_event: event.id,
-      date_begin: moment(event.start).format("YYYY-MM-DD hh:mm:ss"),
-      date_end: moment(event.end).format("YYYY-MM-DD hh:mm:ss"),
+      date_begin: moment(event.start).format("YYYY-MM-DD HH:mm:ss"),
+      date_end: moment(event.end).format("YYYY-MM-DD HH:mm:ss"),
       title: event.title,
       description: event.description
     }

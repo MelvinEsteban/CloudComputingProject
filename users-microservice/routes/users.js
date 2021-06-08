@@ -3,6 +3,16 @@ const users = require('../services/users');
 const checkLogin = require('../services/checkLogin') ;
 const addUser = require('../services/addUser');
 const editPassword = require('../services/editPassword') ;
+const getAll = require('../services/getAll') ;
+
+
+router.get('/getAll', async (req,res, next) => {
+    try {
+        res.json( await getAll()) ;
+    } catch (error) {
+        console.error(error);
+    }
+}) ;
 
 
 router.get('/:login', async function (req, res, next) {
@@ -100,5 +110,7 @@ router.put('/editPassword', async (req, res) => {
         console.error(error) ;
     }
 })
+
+
 
 module.exports = router;

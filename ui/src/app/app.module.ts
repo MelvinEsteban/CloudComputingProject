@@ -39,6 +39,8 @@ import {MatButtonModule} from '@angular/material/button';
 import { UpdateAgendaDialogComponent } from './update-agenda-dialog/update-agenda-dialog.component';
 import { EditEventDialogComponent } from './edit-event-dialog/edit-event-dialog.component';
 import { EditPasswordDialogComponent } from './edit-password-dialog/edit-password-dialog.component';
+import { AgendaUsersDialogComponent } from './agenda-users-dialog/agenda-users-dialog.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 
 export function momentAdapterFactory() {
@@ -59,6 +61,7 @@ export function momentAdapterFactory() {
     UpdateAgendaDialogComponent,
     EditEventDialogComponent,
     EditPasswordDialogComponent,
+    AgendaUsersDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -94,7 +97,8 @@ export function momentAdapterFactory() {
     ReactiveFormsModule,
     MatSelectModule,
     MatSnackBarModule,
-    MatButtonModule
+    MatButtonModule,
+    MatAutocompleteModule
 
   ],
   providers: [

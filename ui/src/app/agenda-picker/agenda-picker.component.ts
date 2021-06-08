@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter, ChangeDetectionStrategy, Chang
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from 'src/environments/environment';
+import { AgendaUsersDialogComponent } from '../agenda-users-dialog/agenda-users-dialog.component';
 import { AuthService } from '../auth/auth.service';
 import { MessageService } from '../message/message.service';
 import { NewAgendaDialogComponent } from '../new-agenda-dialog/new-agenda-dialog.component';
@@ -12,6 +13,11 @@ export interface Agenda {
   name: string;
   id_user: Number;
   visible: boolean;
+}
+
+export interface User {
+  id_user: Number;
+  login: String;
 }
 
 @Component({
@@ -55,13 +61,13 @@ export class AgendaPickerComponent implements OnInit {
           (res) => {
             if (res.status === 'ok') {
               this.agendas.push({
-                id_agenda: res.data.id,
+                id_agenda: res.data.id_agenda,
                 name: result,
                 id_user: this.authService.loggedIdUser,
                 visible: true
               });
               this.changeDetection.detectChanges();
-              this.onUpdateAgendaSelected() ;
+              this.onUpdateAgendaSelected();
             }
           }
         );
@@ -114,5 +120,24 @@ export class AgendaPickerComponent implements OnInit {
 
   onUpdateAgendaSelected(): void {
     this.eventAgenda.emit(this.agendas);
+  }
+
+  dialogUsersManager($event: Event, agenda: Agenda): void {
+
+    const dialogRef = this.dialog.open(AgendaUsersDialogComponent, {
+      width: '20%',
+      data: { agenda: agenda }
+    })
+
+    dialogRef.beforeClosed().subscribe((retour) => {
+      if (retour != undefined && retour.length === 0) {
+        this.deleteAgenda(agenda);
+      }
+      if (retour != undefined && !retour.find((item : User) => item.id_user == this.authService.loggedIdUser)) {
+        this.agendas = this.agendas.filter((event) => event.id_agenda !== agenda.id_agenda);
+        this.changeDetection.detectChanges();
+        this.onUpdateAgendaSelected();
+      }
+    })
   }
 }
